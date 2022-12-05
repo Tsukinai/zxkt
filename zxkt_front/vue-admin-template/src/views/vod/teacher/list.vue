@@ -1,6 +1,32 @@
 <template>
     <div class="app-container">
         讲师列表
+        <!--查询表单-->
+        <el-card class="operate-container" shadow="never">
+            <el-form :inline="true" class="demo-form-inline">
+                <el-form-item label="名称">
+                    <el-input v-model="searchObj.name" placeholder="讲师名" />
+                </el-form-item>
+        
+                <el-form-item label="头衔">
+                    <el-select v-model="searchObj.level" clearable placeholder="头衔">
+                        <el-option value="1" label="高级讲师" />
+                        <el-option value="0" label="首席讲师" />
+                    </el-select>
+                </el-form-item>
+        
+                <el-form-item label="入驻时间">
+                    <el-date-picker v-model="searchObj.joinDateBegin" placeholder="开始时间" value-format="yyyy-MM-dd" />
+                </el-form-item>
+                <el-form-item label="-">
+                    <el-date-picker v-model="searchObj.joinDateEnd" placeholder="结束时间" value-format="yyyy-MM-dd" />
+                </el-form-item>
+                
+                <el-button type="primary" icon="el-icon-search" @click="fetchData()">查询</el-button>
+                <el-button type="default" @click="resetData()">清空</el-button>
+            </el-form>
+        </el-card>
+
         <!-- 表格 -->
         <el-table :data="list" border stripe @selection-change="handleSelectionChange">
             <el-table-column type="selection" />
@@ -28,6 +54,16 @@
                 </template>
             </el-table-column>
         </el-table>
+
+        <!-- 分页组件 -->
+        <el-pagination 
+            :current-page="page" 
+            :total="total" :page-size="limit" 
+            :page-sizes="[5, 10, 20, 30, 40, 50, 100]"
+            style="padding: 30px 0; text-align: center;" 
+            layout="total, sizes, prev, pager, next, jumper"
+            @size-change="changePageSize" 
+            @current-change="changeCurrentPage" />
     </div>
 </template>
 
@@ -55,6 +91,21 @@ export default {
                     this.list = response.data.records
                     this.total = response.data.total
                 })
+        },
+        //改变每页显示记录数
+        changePageSize(size) {
+            this.limit = size
+            this.fetchData()
+        },
+        //改变当前页
+        changeCurrentPage(page) {
+            this.page = page
+            this.fetchData()
+        },
+        //清空
+        resetData() {
+            this.searchObj = {}
+            this.fetchData()
         }
     }
 }

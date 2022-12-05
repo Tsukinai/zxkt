@@ -6,9 +6,9 @@ export default {
     pageList(current, limit, searchObj) {
         return request({
             url: `${api_name}/findQueryPage/${current}/${limit}`,
-            method: 'post',
+            method: `post`,
             //使用json对象传递
-            data:searchObj
+            data: searchObj
         })
     }
 }

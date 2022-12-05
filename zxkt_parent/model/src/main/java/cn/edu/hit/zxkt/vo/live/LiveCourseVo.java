@@ -1,6 +1,6 @@
 package cn.edu.hit.zxkt.vo.live;
 
-import cn.edu.hit.zxkt.model.live.LiveCourse;
+import cn.edu.hit.zxkt.vo.activity.live.LiveCourse;
 import cn.edu.hit.zxkt.model.vod.Teacher;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
