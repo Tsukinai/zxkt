@@ -56,8 +56,8 @@ public class TeacherController {
     }
 
     @ApiOperation("条件查询分页")
-    @GetMapping("findQueryPage/{current}/{limit}")
-    public Result findPage(@PathVariable long current, @PathVariable long limit,@RequestBody(required = false) TeacherQueryVo teacherQueryVo) {
+    @PostMapping("findQueryPage/{current}/{limit}")
+    public Result findPage(@PathVariable long current, @PathVariable long limit, TeacherQueryVo teacherQueryVo) {
         //创建page对象
         Page<Teacher> pageParam=new Page<>(current,limit);
         //判断teacherQueryVo对象是否为空
@@ -93,6 +93,4 @@ public class TeacherController {
     }
 
 }
-
-
 
