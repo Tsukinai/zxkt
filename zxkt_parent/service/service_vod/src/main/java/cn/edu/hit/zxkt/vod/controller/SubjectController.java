@@ -1,9 +1,14 @@
 package cn.edu.hit.zxkt.vod.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import cn.edu.hit.zxkt.model.vod.Subject;
+import cn.edu.hit.zxkt.result.Result;
+import cn.edu.hit.zxkt.vod.service.SubjectService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /**
  * <p>
@@ -14,8 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-12-06
  */
 @RestController
-@RequestMapping("/vod/subject")
+@RequestMapping(value = "/admin/vod/subject")
+@CrossOrigin
 public class SubjectController {
 
+    @Autowired
+    private SubjectService subjectService;
+
+    //课程分类列表
+    //懒加载,每次查询一层数据
+    @ApiOperation("课程分类列表")
+    @GetMapping("getChildSubject/{id}")
+    public Result getChildSubject(@PathVariable Long id){
+        List<Subject> list=subjectService.selectSubjectList(id);
+        return Result.ok(list);
+    }
 }
 
