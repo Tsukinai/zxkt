@@ -2,6 +2,7 @@ package cn.edu.hit.zxkt.vod.controller;
 
 
 import cn.edu.hit.zxkt.model.vod.Teacher;
+import cn.edu.hit.zxkt.result.Result;
 import cn.edu.hit.zxkt.vod.service.TeacherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,15 +33,21 @@ public class TeacherController {
     //1 查询所有讲师
     @ApiOperation("查询所有讲师")
     @GetMapping("findAll")
-    public List<Teacher> findAllTeacher() {
-        return teacherService.list();
+    public Result findAllTeacher() {
+        List<Teacher> list = teacherService.list();
+        return Result.ok(list);
     }
 
     //2 逻辑删除讲师
     @ApiOperation("逻辑删除讲师")
     @DeleteMapping("remove/{id}")
-    public boolean removeTeacher(@ApiParam(name = "id", value = "ID", required = true) @PathVariable String id) {
-        return teacherService.removeById(id);
+    public Result removeTeacher(@ApiParam(name = "id", value = "ID", required = true) @PathVariable String id) {
+        boolean isSuccess = teacherService.removeById(id);
+        if(isSuccess){
+            return Result.ok(null);
+        }else {
+            return Result.fail(null);
+        }
     }
 
 }
