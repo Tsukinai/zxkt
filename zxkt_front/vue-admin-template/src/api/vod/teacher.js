@@ -17,6 +17,15 @@ export default {
             url: `${api_name}/remove/${id}`,
             method: `delete`,
         })
+    },
+    //添加讲师
+    addTeacher(teacher) {
+        return request({
+            url: `${api_name}/saveTeacher`,
+            method: `post`,
+            //使用json对象传递
+            data: teacher
+        })
     }
 
 }
