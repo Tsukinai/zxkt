@@ -1,6 +1,6 @@
 package cn.edu.hit.zxkt.vod.mapper;
 
-import cn.edu.hit.zxkt.vod.entity.Video;
+import cn.edu.hit.zxkt.model.vod.Video;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
