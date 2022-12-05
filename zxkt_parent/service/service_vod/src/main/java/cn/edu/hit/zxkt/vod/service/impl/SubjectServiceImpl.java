@@ -4,6 +4,7 @@ package cn.edu.hit.zxkt.vod.service.impl;
 import cn.edu.hit.zxkt.exception.ZxktException;
 import cn.edu.hit.zxkt.model.vod.Subject;
 import cn.edu.hit.zxkt.vo.vod.SubjectEeVo;
+import cn.edu.hit.zxkt.vod.listener.SubjectListener;
 import cn.edu.hit.zxkt.vod.mapper.SubjectMapper;
 import cn.edu.hit.zxkt.vod.service.SubjectService;
 import com.alibaba.excel.EasyExcel;
@@ -11,9 +12,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +32,9 @@ import java.util.List;
  */
 @Service
 public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> implements SubjectService {
+
+    @Autowired
+    private SubjectListener subjectListener;
 
     @Override
     public List<Subject> selectSubjectList(Long id) {
@@ -70,6 +77,16 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
             throw new ZxktException(20001,"导不出来啊啊啊啊啊啊啊啊啊啊");
         }
 
+    }
+
+    //课程分类导入
+    @Override
+    public void importData(MultipartFile file) {
+        try {
+            EasyExcel.read(file.getInputStream(),SubjectEeVo.class,subjectListener).sheet().doRead();
+        } catch (IOException e) {
+            throw new ZxktException(20001,"怎么导也导不进去啊啊啊啊啊啊啊啊啊啊啊");
+        }
     }
 
     //判断是否有下一层数据
