@@ -1,4 +1,4 @@
-package cn.edu.hit.zxkt.model.live;
+package cn.edu.hit.zxkt.vo.activity.live;
 
 import cn.edu.hit.zxkt.model.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
