@@ -55,11 +55,12 @@ public class TeacherController {
         }
     }
 
+    //3 条件查询分页
     @ApiOperation("条件查询分页")
     @PostMapping("findQueryPage/{current}/{limit}")
-    public Result findPage(@PathVariable long current, @PathVariable long limit, TeacherQueryVo teacherQueryVo) {
+    public Result findPage(@PathVariable long current, @PathVariable long limit, @RequestBody(required = false) TeacherQueryVo teacherQueryVo) {
         //创建page对象
-        Page<Teacher> pageParam=new Page<>(current,limit);
+        Page<Teacher> pageParam = new Page<>(current, limit);
         //判断teacherQueryVo对象是否为空
         if (teacherQueryVo == null) {
             IPage<Teacher> pageModel = teacherService.page(pageParam);
@@ -88,11 +89,53 @@ public class TeacherController {
             //调用方法分页查询
             IPage<Teacher> pageModel = teacherService.page(pageParam, wrapper);
             return Result.ok(pageModel);
-
         }
     }
 
+    //4 添加讲师
+    @ApiOperation("添加讲师")
+    @PostMapping("saveTeacher")
+    public Result saveTeacher(@RequestBody Teacher teacher){
+        boolean isSuccess = teacherService.save(teacher);
+        if (isSuccess) {
+            return Result.ok(null);
+        } else {
+            return Result.fail(null);
+        }
+    }
+
+    //5 修改-根据id查询
+    @ApiOperation("根据id查询")
+    @GetMapping("getTeacher/{id}")
+    public Result getTeacher(@PathVariable Long id){
+        Teacher teacher=teacherService.getById(id);
+        return Result.ok(teacher);
+    }
+
+    //5 修改-最终实现
+    @ApiOperation("修改最终实现")
+    @PostMapping("updateTeacher")
+    public Result updateTeacher(@RequestBody Teacher teacher){
+        boolean isSuccess = teacherService.updateById(teacher);
+        if (isSuccess) {
+            return Result.ok(null);
+        } else {
+            return Result.fail(null);
+        }
+    }
+
+    //6 批量删除讲师
+    @ApiOperation("批量删除讲师")
+    @DeleteMapping("removeBatch")
+    public Result removeBatch(@RequestBody List<Long> idList){
+        boolean isSuccess = teacherService.removeByIds(idList);
+        if (isSuccess) {
+            return Result.ok(null);
+        } else {
+            return Result.fail(null);
+        }
+    }
+
+
 }
-
-
 
