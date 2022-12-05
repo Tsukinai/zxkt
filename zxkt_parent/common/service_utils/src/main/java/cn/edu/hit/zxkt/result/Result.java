@@ -1,7 +1,5 @@
 package cn.edu.hit.zxkt.result;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -9,56 +7,51 @@ import lombok.Data;
  *
  */
 @Data
-@ApiModel(value = "全局统一返回结果")
 public class Result<T> {
 
-    @ApiModelProperty(value = "返回码")
-    private Integer code;
+    private Integer code;//状态码
 
-    @ApiModelProperty(value = "返回消息")
-    private String message;
+    private String message;//返回状态信息
 
-    @ApiModelProperty(value = "返回数据")
-    private T data;
+    private T data;//返回数据
 
     public Result(){}
 
-    public static <T> Result<T> build(T body, Integer code, String message) {
-        Result<T> result = new Result<T>();
-        if (body != null) {
-            result.setData(body);
+//    public static<T> Result<T> ok(){
+//        Result<T> result=new Result<>();
+//        result.setCode(200);
+//        result.setMessage("成功");
+//        return result;
+//    }
+//
+//    public static<T> Result<T> fail(){
+//        Result<T> result=new Result<>();
+//        result.setCode(201);
+//        result.setMessage("失败");
+//        return result;
+//    }
+//
+
+    //成功的方法,有data数据
+    public static<T> Result<T> ok(T data){
+        Result<T> result=new Result<>();
+        if(data!=null){
+            result.setData(data);
         }
-        result.setCode(code);
-        result.setMessage(message);
+        result.setCode(200);
+        result.setMessage("成功");
         return result;
     }
 
-    public static<T> Result<T> ok(){
-        return Result.ok(null);
-    }
-
-    /**
-     * 操作成功
-     * @param data  baseCategory1List
-     * @param <T>
-     * @return
-     */
-    public static<T> Result<T> ok(T data){
-        return build(data,200,"成功");
-    }
-
-    public static<T> Result<T> fail(){
-        return Result.fail(null);
-    }
-
-    /**
-     * 操作失败
-     * @param data
-     * @param <T>
-     * @return
-     */
+    //失败的方法,有data数据
     public static<T> Result<T> fail(T data){
-        return build(data, 201,"失败");
+        Result<T> result=new Result<>();
+        if(data!=null){
+            result.setData(data);
+        }
+        result.setCode(201);
+        result.setMessage("失败");
+        return result;
     }
 
     public Result<T> message(String msg){
@@ -70,4 +63,5 @@ public class Result<T> {
         this.setCode(code);
         return this;
     }
+
 }
