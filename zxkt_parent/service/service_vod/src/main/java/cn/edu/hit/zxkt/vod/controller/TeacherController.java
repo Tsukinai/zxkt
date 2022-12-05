@@ -124,6 +124,18 @@ public class TeacherController {
         }
     }
 
+    //6 批量删除讲师
+    @ApiOperation("批量删除讲师")
+    @DeleteMapping("removeBatch")
+    public Result removeBatch(@RequestBody List<Long> idList){
+        boolean isSuccess = teacherService.removeByIds(idList);
+        if (isSuccess) {
+            return Result.ok(null);
+        } else {
+            return Result.fail(null);
+        }
+    }
+
 
 }
 
