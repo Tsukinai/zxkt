@@ -1,6 +1,5 @@
 package cn.edu.hit.zxkt.vod.controller;
 
-
 import cn.edu.hit.zxkt.model.vod.Teacher;
 import cn.edu.hit.zxkt.result.Result;
 import cn.edu.hit.zxkt.vo.vod.TeacherQueryVo;
@@ -95,7 +94,7 @@ public class TeacherController {
     //4 添加讲师
     @ApiOperation("添加讲师")
     @PostMapping("saveTeacher")
-    public Result saveTeacher(@RequestBody Teacher teacher){
+    public Result saveTeacher(@RequestBody Teacher teacher) {
         boolean isSuccess = teacherService.save(teacher);
         if (isSuccess) {
             return Result.ok(null);
@@ -107,15 +106,15 @@ public class TeacherController {
     //5 修改-根据id查询
     @ApiOperation("根据id查询")
     @GetMapping("getTeacher/{id}")
-    public Result getTeacher(@PathVariable Long id){
-        Teacher teacher=teacherService.getById(id);
+    public Result getTeacher(@PathVariable Long id) {
+        Teacher teacher = teacherService.getById(id);
         return Result.ok(teacher);
     }
 
     //5 修改-最终实现
     @ApiOperation("修改最终实现")
     @PostMapping("updateTeacher")
-    public Result updateTeacher(@RequestBody Teacher teacher){
+    public Result updateTeacher(@RequestBody Teacher teacher) {
         boolean isSuccess = teacherService.updateById(teacher);
         if (isSuccess) {
             return Result.ok(null);
@@ -127,7 +126,7 @@ public class TeacherController {
     //6 批量删除讲师
     @ApiOperation("批量删除讲师")
     @DeleteMapping("removeBatch")
-    public Result removeBatch(@RequestBody List<Long> idList){
+    public Result removeBatch(@RequestBody List<Long> idList) {
         boolean isSuccess = teacherService.removeByIds(idList);
         if (isSuccess) {
             return Result.ok(null);
