@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -30,9 +31,16 @@ public class SubjectController {
     //懒加载,每次查询一层数据
     @ApiOperation("课程分类列表")
     @GetMapping("getChildSubject/{id}")
-    public Result getChildSubject(@PathVariable Long id){
-        List<Subject> list=subjectService.selectSubjectList(id);
+    public Result getChildSubject(@PathVariable Long id) {
+        List<Subject> list = subjectService.selectSubjectList(id);
         return Result.ok(list);
+    }
+
+    //课程分类导出
+    @ApiOperation("课程分类导出")
+    @GetMapping("exportData")
+    public void exportData(HttpServletResponse response) {
+        subjectService.exportData(response);
     }
 }
 

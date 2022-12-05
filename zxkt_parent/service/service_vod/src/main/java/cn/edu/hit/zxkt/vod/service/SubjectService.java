@@ -4,6 +4,7 @@ package cn.edu.hit.zxkt.vod.service;
 import cn.edu.hit.zxkt.model.vod.Subject;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -18,4 +19,6 @@ public interface SubjectService extends IService<Subject> {
 
     List<Subject> selectSubjectList(Long id);
 
+    //课程分类导出
+    void exportData(HttpServletResponse response);
 }
