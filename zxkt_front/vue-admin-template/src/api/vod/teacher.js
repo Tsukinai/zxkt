@@ -10,5 +10,13 @@ export default {
             //使用json对象传递
             data: searchObj
         })
+    },
+    //讲师删除
+    removeById(id) {
+        return request({
+            url: `${api_name}/remove/${id}`,
+            method: `delete`,
+        })
     }
+
 }
