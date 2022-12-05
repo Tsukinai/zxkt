@@ -4,10 +4,7 @@ package cn.edu.hit.zxkt.vod.controller;
 import cn.edu.hit.zxkt.model.vod.Teacher;
 import cn.edu.hit.zxkt.vod.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -30,9 +27,16 @@ public class TeacherController {
     //localhost:8301/admin/vod/teacher/findAll
     //1 查询所有讲师
     @GetMapping("findAll")
-    public List<Teacher> findAllTeacher(){
+    public List<Teacher> findAllTeacher() {
         List<Teacher> list = teacherService.list();
         return list;
+    }
+
+    //2 逻辑删除讲师
+    @DeleteMapping("remove/{id}")
+    public boolean removeTeacher(@PathVariable Long id) {
+        boolean isSuccess = teacherService.removeById(id);
+        return isSuccess;
     }
 
 }
