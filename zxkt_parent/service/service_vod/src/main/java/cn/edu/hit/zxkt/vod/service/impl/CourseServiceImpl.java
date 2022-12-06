@@ -1,16 +1,20 @@
 package cn.edu.hit.zxkt.vod.service.impl;
 
 import cn.edu.hit.zxkt.model.vod.Course;
+import cn.edu.hit.zxkt.model.vod.CourseDescription;
 import cn.edu.hit.zxkt.model.vod.Subject;
 import cn.edu.hit.zxkt.model.vod.Teacher;
+import cn.edu.hit.zxkt.vo.vod.CourseFormVo;
 import cn.edu.hit.zxkt.vo.vod.CourseQueryVo;
 import cn.edu.hit.zxkt.vod.mapper.CourseMapper;
+import cn.edu.hit.zxkt.vod.service.CourseDescriptionService;
 import cn.edu.hit.zxkt.vod.service.CourseService;
 import cn.edu.hit.zxkt.vod.service.SubjectService;
 import cn.edu.hit.zxkt.vod.service.TeacherService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -35,6 +39,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private SubjectService subjectService;
+
+    @Autowired
+    private CourseDescriptionService descriptionService;
     //点播课程列表
     @Override
     public Map<String, Object> findPageCourse(Page<Course> pageParam, CourseQueryVo courseQueryVo) {
@@ -76,6 +83,21 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         map.put("totalPage", totalPage);
         map.put("records", list);
         return map;
+    }
+
+    @Override
+    public Long saveCourseInfo(CourseFormVo courseFormVo) {
+        //添加课程基本信息,操作course表
+        Course course=new Course();
+        BeanUtils.copyProperties(courseFormVo,course);
+        baseMapper.insert(course);
+        //添加课程描述信息,操作course_description
+        CourseDescription courseDescription=new CourseDescription();
+        courseDescription.setDescription(courseFormVo.getDescription());
+        //设置课程id
+        courseDescription.setId(course.getId());
+        descriptionService.save(courseDescription);
+        return course.getId();
     }
 
     //获取这些id对应名称进行封装,最终显示
