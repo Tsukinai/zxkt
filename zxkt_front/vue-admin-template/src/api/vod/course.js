@@ -29,12 +29,12 @@ export default {
   updateCourseInfoById(courseInfo) {
     return request({
       url: `${api_name}/update`,
-      method: 'put',
+      method: 'post',
       data: courseInfo
     })
   },
 
-  //获取发布课程信息  
+  //获取发布课程信息
   getCoursePublishById(id) {
     return request({
       url: `${api_name}/getCoursePublishVo/${id}`,
@@ -42,7 +42,7 @@ export default {
     })
   },
 
-  //发布课程  
+  //发布课程
   publishCourseById(id) {
     return request({
       url: `${api_name}/publishCourse/${id}`,
