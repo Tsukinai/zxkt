@@ -7,9 +7,9 @@
       <el-step title="发布课程" />
     </el-steps>
     <!-- 填写课程基本信息 -->
-    <info v-if="active === 0" />
+    <Info v-if="active === 0" />
     <!-- 创建课程大纲 -->
-    <chapter v-if="active === 1" />
+    <Chapter v-if="active === 1" />
     <!-- 发布课程 -->
     <Publish v-if="active === 2 || active === 3" />
   </div>
