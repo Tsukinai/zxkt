@@ -13,10 +13,10 @@
       </el-form-item>
       <el-form-item label="讲师头衔">
         <el-select v-model="teacher.level">
-      <!--
-      数据类型一定要和取出的json中的一致，否则没法回填
-      因此，这里value使用动态绑定的值，保证其数据类型是number
-      -->
+          <!--
+          数据类型一定要和取出的json中的一致，否则没法回填
+          因此，这里value使用动态绑定的值，保证其数据类型是number
+          -->
           <el-option :value="1" label="高级讲师" />
           <el-option :value="0" label="首席讲师" />
         </el-select>
@@ -36,7 +36,8 @@
           :before-upload="beforeAvatarUpload"
           :on-error="handleAvatarError"
           :action="BASE_API+'/admin/vod/file/upload'"
-          class="avatar-uploader">
+          class="avatar-uploader"
+        >
           <img v-if="teacher.avatar" :src="teacher.avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon" />
         </el-upload>
