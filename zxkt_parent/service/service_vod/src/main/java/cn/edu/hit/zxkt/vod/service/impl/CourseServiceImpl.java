@@ -106,19 +106,20 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     //根据id获得课程信息
     @Override
     public CourseFormVo getCourseInfoById(Long id) {
+        //课程基本信息
         Course course = baseMapper.selectById(id);
-        if (course == null) {
+        if(course == null) {
             return null;
         }
         //课程描述信息
         QueryWrapper<CourseDescription> wrapper = new QueryWrapper<>();
         wrapper.eq("course_id", id);
-        CourseDescription courseDescription = descriptionService.getOne(wrapper);
+        CourseDescription courseDescription =descriptionService.getOne(wrapper);
         //封装
         CourseFormVo courseFormVo = new CourseFormVo();
-        BeanUtils.copyProperties(course, courseFormVo);
+        BeanUtils.copyProperties(course,courseFormVo);
         //封装描述
-        if (courseDescription != null) {
+        if(courseDescription != null) {
             courseFormVo.setDescription(courseDescription.getDescription());
         }
         return courseFormVo;
@@ -135,7 +136,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         CourseDescription description=new CourseDescription();
         description.setDescription(courseFormVo.getDescription());
         //修改课程描述id
-        description.setId(course.getId());
+        //description.setId(course.getId());
+        description.setId(courseFormVo.getId());
         descriptionService.updateById(description);
     }
 
