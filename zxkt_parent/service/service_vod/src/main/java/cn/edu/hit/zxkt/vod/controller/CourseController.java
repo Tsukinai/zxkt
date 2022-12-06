@@ -46,5 +46,18 @@ public class CourseController {
         return Result.ok(map);
     }
 
+    //根据id获取课程信息
+    @GetMapping("get/{id}")
+    public Result get(@PathVariable Long id){
+        CourseFormVo courseFormVo=courseService.getCourseInfoById(id);
+        return Result.ok(courseFormVo);
+    }
+
+    //修改课程信息
+    @PostMapping("update")
+    public Result update(@RequestBody CourseFormVo courseFormVo){
+        courseService.updateCourse(courseFormVo);
+        return Result.ok(null);
+    }
 }
 

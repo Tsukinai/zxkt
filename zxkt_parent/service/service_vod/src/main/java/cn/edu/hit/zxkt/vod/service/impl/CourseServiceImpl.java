@@ -42,6 +42,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private CourseDescriptionService descriptionService;
+
     //点播课程列表
     @Override
     public Map<String, Object> findPageCourse(Page<Course> pageParam, CourseQueryVo courseQueryVo) {
@@ -88,11 +89,11 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Override
     public Long saveCourseInfo(CourseFormVo courseFormVo) {
         //添加课程基本信息,操作course表
-        Course course=new Course();
-        BeanUtils.copyProperties(courseFormVo,course);
+        Course course = new Course();
+        BeanUtils.copyProperties(courseFormVo, course);
         baseMapper.insert(course);
         //添加课程描述信息,操作course_description
-        CourseDescription courseDescription=new CourseDescription();
+        CourseDescription courseDescription = new CourseDescription();
         courseDescription.setDescription(courseFormVo.getDescription());
         //设置课程id
         courseDescription.setId(course.getId());
@@ -100,23 +101,57 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         return course.getId();
     }
 
+    //根据id获得课程信息
+    @Override
+    public CourseFormVo getCourseInfoById(Long id) {
+        Course course = baseMapper.selectById(id);
+        if (course == null) {
+            return null;
+        }
+        //课程描述信息
+        QueryWrapper<CourseDescription> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id", id);
+        CourseDescription courseDescription = descriptionService.getOne(wrapper);
+        //封装
+        CourseFormVo courseFormVo = new CourseFormVo();
+        BeanUtils.copyProperties(course, courseFormVo);
+        //封装描述
+        if (courseDescription != null) {
+            courseFormVo.setDescription(courseDescription.getDescription());
+        }
+        return courseFormVo;
+    }
+
+    //修改课程信息
+    @Override
+    public void updateCourse(CourseFormVo courseFormVo) {
+        //修改课程基本信息
+        Course course=new Course();
+        BeanUtils.copyProperties(courseFormVo,course);
+        baseMapper.updateById(course);
+        //修改课程描述信息
+        CourseDescription description=new CourseDescription();
+        description.setDescription(courseFormVo.getDescription());
+        descriptionService.updateById(description);
+    }
+
     //获取这些id对应名称进行封装,最终显示
     private Course getNameById(Course course) {
         //根据讲师id获取讲师名称
         Teacher teacher = teacherService.getById(course.getTeacherId());
-        if(teacher!=null){
+        if (teacher != null) {
             String name = teacher.getName();
-            course.getParam().put("teacherName",name);
+            course.getParam().put("teacherName", name);
         }
 
         //根据课程分类id获取课程分类名称
-        Subject subjectOne=subjectService.getById(course.getSubjectParentId());
-        if(subjectOne!=null){
-            course.getParam().put("subjectParentTitle",subjectOne.getTitle());
+        Subject subjectOne = subjectService.getById(course.getSubjectParentId());
+        if (subjectOne != null) {
+            course.getParam().put("subjectParentTitle", subjectOne.getTitle());
         }
-        Subject subjectTwo=subjectService.getById(course.getSubjectParentId());
-        if(subjectTwo!=null){
-            course.getParam().put("subjectParentTitle",subjectTwo.getTitle());
+        Subject subjectTwo = subjectService.getById(course.getSubjectParentId());
+        if (subjectTwo != null) {
+            course.getParam().put("subjectParentTitle", subjectTwo.getTitle());
         }
         return course;
     }
