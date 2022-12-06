@@ -58,7 +58,7 @@ public class CourseController {
     @PostMapping("update")
     public Result update(@RequestBody CourseFormVo courseFormVo) {
         courseService.updateCourseId(courseFormVo);
-        return Result.ok(null);
+        return Result.ok(courseFormVo.getId());
     }
 
     //根据课程id查询发布课程信息
