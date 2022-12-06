@@ -74,12 +74,37 @@ export default {
     }
   },
   created() {
-    // 初始化分类列表
-    this.initSubjectList()
+    if (this.$parent.courseId) { // 回显
+      this.fetchCourseInfoById(this.$parent.courseId)
+    } else { // 新增
+      // 初始化分类列表
+      this.initSubjectList()
+    }
     // 获取讲师列表
     this.initTeacherList()
   },
   methods: {
+    // 获取课程信息
+    fetchCourseInfoById(id) {
+      courseApi.getCourseInfoById(id).then(response => {
+        this.courseInfo = response.data
+        // 初始化分类列表
+        subjectApi.getChildList(0).then(response => {
+          this.subjectList = response.data
+          // 填充二级菜单：遍历一级菜单列表，
+          this.subjectList.forEach(subject => {
+            // 找到和courseInfo.subjectParentId一致的父类别记录
+            if (subject.id === this.courseInfo.subjectParentId) {
+              // 拿到当前类别下的子类别列表，将子类别列表填入二级下拉菜单列表
+              subjectApi.getChildList(subject.id).then(response => {
+                this.subjectLevelTwoList = response.data
+              })
+            }
+          })
+        })
+      })
+    },
+
     // 获取讲师列表
     initTeacherList() {
       teacherApi.list().then(response => {
@@ -133,13 +158,22 @@ export default {
       if (!this.$parent.courseId) {
         this.saveData()
       } else {
-        //this.updateData()
+        this.updateData()
       }
     },
 
     // 保存
     saveData() {
       courseApi.saveCourseInfo(this.courseInfo).then(response => {
+        this.$message.success(response.message)
+        this.$parent.courseId = response.data // 获取courseId
+        this.$parent.active = 1 // 下一步
+      })
+    },
+
+    // 修改
+    updateData() {
+      courseApi.updateCourseInfoById(this.courseInfo).then(response => {
         this.$message.success(response.message)
         this.$parent.courseId = response.data // 获取courseId
         this.$parent.active = 1 // 下一步
