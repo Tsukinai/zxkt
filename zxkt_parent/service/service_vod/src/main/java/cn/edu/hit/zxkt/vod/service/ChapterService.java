@@ -1,7 +1,10 @@
 package cn.edu.hit.zxkt.vod.service;
 
 import cn.edu.hit.zxkt.model.vod.Chapter;
+import cn.edu.hit.zxkt.vo.vod.ChapterVo;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ChapterService extends IService<Chapter> {
 
+    List<ChapterVo> getTreeList(Long courseId);
 }
