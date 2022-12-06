@@ -26,6 +26,12 @@ export default {
             //使用json对象传递
             data: teacher
         })
+    },
+    //根据id查询
+    getById(id) {
+        return request({
+            url: `${api_name}/getTeacher/${id}`,
+            method: `get`,
+        })
     }
-
 }

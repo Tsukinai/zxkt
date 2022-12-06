@@ -51,9 +51,20 @@ export default {
         }
     },
     created() {
-
+        //获取路径中的id值
+        if (this.$route.params.id) {
+            const id = this.$route.params.id
+            this.fetchDataById(id)
+        }
     },
     methods: {
+        //根据id查询讲师
+        fetchDataById(id) {
+            teacherApi.getById(id)
+                .then(response => {
+                    this.teacher = response.data
+            })
+        },
         saveOrUpdate() {
             teacherApi.addTeacher(this.teacher)
                 .then(response => {
