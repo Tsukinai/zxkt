@@ -72,8 +72,15 @@ public class CourseController {
     //课程最终发布
     @ApiOperation("课程最终发布")
     @PutMapping("publishCourse/{id}")
-    public Result publishCourse(@PathVariable Long id){
+    public Result publishCourse(@PathVariable Long id) {
         courseService.publishCourse(id);
+        return Result.ok(null);
+    }
+
+    //删除课程
+    @DeleteMapping("remove/{id}")
+    public Result remove(@PathVariable Long id) {
+        courseService.removeCourseId(id);
         return Result.ok(null);
     }
 }

@@ -8,10 +8,7 @@ import cn.edu.hit.zxkt.vo.vod.CourseFormVo;
 import cn.edu.hit.zxkt.vo.vod.CoursePublishVo;
 import cn.edu.hit.zxkt.vo.vod.CourseQueryVo;
 import cn.edu.hit.zxkt.vod.mapper.CourseMapper;
-import cn.edu.hit.zxkt.vod.service.CourseDescriptionService;
-import cn.edu.hit.zxkt.vod.service.CourseService;
-import cn.edu.hit.zxkt.vod.service.SubjectService;
-import cn.edu.hit.zxkt.vod.service.TeacherService;
+import cn.edu.hit.zxkt.vod.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -44,6 +41,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private CourseDescriptionService descriptionService;
+
+    @Autowired
+    private VideoService videoService;
+
+    @Autowired
+    private ChapterService chapterService;
 
     //点播课程列表
     @Override
@@ -154,6 +157,19 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         course.setStatus(1);//已经发布
         course.setPublishTime(new Date());
         baseMapper.updateById(course);
+    }
+
+    //根据课程id删除课程
+    @Override
+    public void removeCourseId(Long id) {
+        //删除小节
+        videoService.removeVideoByCourseId(id);
+        //删除章节
+        chapterService.removeChapterByCourseId(id);
+        //删除课程描述
+        descriptionService.removeById(id);
+        //删除课程
+        baseMapper.deleteById(id);
     }
 
     //获取这些id对应名称进行封装,最终显示
