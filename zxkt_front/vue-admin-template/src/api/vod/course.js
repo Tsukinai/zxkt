@@ -29,7 +29,7 @@ export default {
   updateCourseInfoById(courseInfo) {
     return request({
       url: `${api_name}/update`,
-      method: 'put',
+      method: 'post',
       data: courseInfo
     })
   },
