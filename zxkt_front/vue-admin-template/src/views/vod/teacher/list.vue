@@ -27,6 +27,14 @@
             </el-form>
         </el-card>
 
+        <!-- 工具按钮 -->
+        <el-card class="operate-container" shadow="never">
+            <i class="el-icon-tickets" style="margin-top: 5px"></i>
+            <span style="margin-top: 5px">数据列表</span>
+            <el-button class="btn-add" @click="add()" style="margin-left: 10px;">添加</el-button>
+            <el-button class="btn-add" @click="batchRemove()">批量删除</el-button>
+        </el-card>
+
         <!-- 表格 -->
         <el-table :data="list" border stripe @selection-change="handleSelectionChange">
             <el-table-column type="selection" />
@@ -77,7 +85,8 @@ export default {
             total: 0, // 总记录数
             page: 1, // 当前页码
             limit: 10, // 每页记录数
-            searchObj: {} // 查询条件
+            searchObj: {}, // 查询条件
+            multipleSelection: []
         }
     },
     created() {
@@ -115,6 +124,39 @@ export default {
                 type: 'warning'
             }).then(() => {
                 return teacherApi.removeById(id)
+            }).then((response) => {
+                this.fetchData()
+                this.$message.success(response.message)
+            })
+        },
+
+        add() {
+            this.$router.push({ path: '/vod/teacher/create' })
+        },
+        //复选框发生变化，传递所在行数据
+        handleSelectionChange(selection) {
+            this.multipleSelection = selection
+        },
+        batchRemove() {
+            //判断非空
+            if (this.multipleSelection.length === 0) {
+                this.$message.warning("未选择所需删除讲师")
+                return
+            } 
+            this.$confirm('此操作将永久删除该讲师信息, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                var idList = []
+                //遍历数组，得到id值
+                for (var i = 0; i < this.multipleSelection.length; i++){
+                    var choose = this.multipleSelection[i]
+                    var id = choose.id
+                    idList.push(id)
+                }
+                console.log(idList)
+                return teacherApi.batchRemove(idList)
             }).then((response) => {
                 this.fetchData()
                 this.$message.success(response.message)

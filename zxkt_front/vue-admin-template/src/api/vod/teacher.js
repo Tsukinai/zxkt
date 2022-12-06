@@ -42,5 +42,12 @@ export default {
             //使用json对象传递
             data: teacher
         })
+    },
+    batchRemove(idList) {
+        return request({
+            url: `${api_name}/removeBatch`,
+            method: `delete`,
+            data: idList
+        })
     }
 }
