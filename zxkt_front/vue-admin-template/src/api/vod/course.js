@@ -49,4 +49,12 @@ export default {
       method: 'put'
     })
   },
+
+  //删除课程
+  removeById(id) {
+    return request({
+      url: `${api_name}/remove/${id}`,
+      method: 'delete'
+    })
+  }
 }
