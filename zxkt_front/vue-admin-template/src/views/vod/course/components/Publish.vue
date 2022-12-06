@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
-    <!--¿Î³ÌÔ¤ÀÀ-->
+    <!--è¯¾ç¨‹é¢„è§ˆ-->
     <div class="ccInfo">
       <img :src="coursePublish.cover">
       <div class="main">
         <h2>{{ coursePublish.title }}</h2>
-        <p class="gray"><span>¹²{{ coursePublish.lessonNum }}¿ÎÊ±</span></p>
-        <p><span>ËùÊô·ÖÀà£º{{ coursePublish.subjectParentTitle }} ¡ª {{ coursePublish.subjectTitle }}</span></p>
-        <p>¿Î³Ì½²Ê¦£º{{ coursePublish.teacherName }}</p>
-        <h3 class="red">£¤{{ coursePublish.price }}</h3>
+        <p class="gray"><span>å…±{{ coursePublish.lessonNum }}è¯¾æ—¶</span></p>
+        <p><span>æ‰€å±åˆ†ç±»ï¼š{{ coursePublish.subjectParentTitle }} â€” {{ coursePublish.subjectTitle }}</span></p>
+        <p>è¯¾ç¨‹è®²å¸ˆï¼š{{ coursePublish.teacherName }}</p>
+        <h3 class="red">ï¿¥{{ coursePublish.price }}</h3>
       </div>
     </div>
     <div style="text-align:center">
-      <el-button type="primary" @click="prev()">ÉÏÒ»²½</el-button>
-      <el-button :disabled="publishBtnDisabled" type="primary" @click="publish()">·¢²¼¿Î³Ì</el-button>
+      <el-button type="primary" @click="prev()">ä¸Šä¸€æ­¥</el-button>
+      <el-button :disabled="publishBtnDisabled" type="primary" @click="publish()">å‘å¸ƒè¯¾ç¨‹</el-button>
     </div>
   </div>
 </template>
@@ -24,7 +24,7 @@ import courseApi from '@/api/vod/course'
 export default {
   data() {
     return {
-      publishBtnDisabled: false, // °´Å¥ÊÇ·ñ½ûÓÃ
+      publishBtnDisabled: false, // æŒ‰é’®æ˜¯å¦ç¦ç”¨
       coursePublish: {}
     }
   },
@@ -34,17 +34,17 @@ export default {
     }
   },
   methods: {
-    // »ñÈ¡¿Î³Ì·¢²¼ĞÅÏ¢
+    // è·å–è¯¾ç¨‹å‘å¸ƒä¿¡æ¯
     fetchCoursePublishById(id) {
       courseApi.getCoursePublishById(id).then(response => {
         this.coursePublish = response.data
       })
     },
-    // ÉÏÒ»²½
+    // ä¸Šä¸€æ­¥
     prev() {
       this.$parent.active = 1
     },
-    // ÏÂÒ»²½
+    // ä¸‹ä¸€æ­¥
     publish() {
       this.publishBtnDisabled = true
       courseApi.publishCourseById(this.$parent.courseId).then(response => {
