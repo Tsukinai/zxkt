@@ -57,7 +57,7 @@ public class CourseController {
     //修改课程信息
     @PostMapping("update")
     public Result update(@RequestBody CourseFormVo courseFormVo) {
-        courseService.updateCourse(courseFormVo);
+        courseService.updateCourseId(courseFormVo);
         return Result.ok(null);
     }
 

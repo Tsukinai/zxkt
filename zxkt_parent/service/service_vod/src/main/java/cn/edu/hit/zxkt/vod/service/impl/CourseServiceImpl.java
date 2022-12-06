@@ -126,7 +126,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     //修改课程信息
     @Override
-    public void updateCourse(CourseFormVo courseFormVo) {
+    public void updateCourseId(CourseFormVo courseFormVo) {
         //修改课程基本信息
         Course course=new Course();
         BeanUtils.copyProperties(courseFormVo,course);
@@ -134,6 +134,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         //修改课程描述信息
         CourseDescription description=new CourseDescription();
         description.setDescription(courseFormVo.getDescription());
+        //修改课程描述id
+        description.setId(course.getId());
         descriptionService.updateById(description);
     }
 

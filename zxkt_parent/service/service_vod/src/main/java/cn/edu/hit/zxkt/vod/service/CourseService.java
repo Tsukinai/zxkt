@@ -25,7 +25,7 @@ public interface CourseService extends IService<Course> {
 
     CourseFormVo getCourseInfoById(Long id);
 
-    void updateCourse(CourseFormVo courseFormVo);
+    void updateCourseId(CourseFormVo courseFormVo);
 
     CoursePublishVo getCoursePublishVo(Long id);
 
