@@ -1,6 +1,7 @@
 package cn.edu.hit.zxkt.vod.mapper;
 
 import cn.edu.hit.zxkt.model.vod.Course;
+import cn.edu.hit.zxkt.vo.vod.CoursePublishVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CourseMapper extends BaseMapper<Course> {
 
+    CoursePublishVo selectCoursePublishVoById(Long id);
 }

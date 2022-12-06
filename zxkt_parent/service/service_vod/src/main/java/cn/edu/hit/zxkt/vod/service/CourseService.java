@@ -2,6 +2,7 @@ package cn.edu.hit.zxkt.vod.service;
 
 import cn.edu.hit.zxkt.model.vod.Course;
 import cn.edu.hit.zxkt.vo.vod.CourseFormVo;
+import cn.edu.hit.zxkt.vo.vod.CoursePublishVo;
 import cn.edu.hit.zxkt.vo.vod.CourseQueryVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -25,4 +26,9 @@ public interface CourseService extends IService<Course> {
     CourseFormVo getCourseInfoById(Long id);
 
     void updateCourse(CourseFormVo courseFormVo);
+
+    CoursePublishVo getCoursePublishVo(Long id);
+
+    //课程最终发布
+    void publishCourse(Long id);
 }

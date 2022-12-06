@@ -5,6 +5,7 @@ import cn.edu.hit.zxkt.model.vod.CourseDescription;
 import cn.edu.hit.zxkt.model.vod.Subject;
 import cn.edu.hit.zxkt.model.vod.Teacher;
 import cn.edu.hit.zxkt.vo.vod.CourseFormVo;
+import cn.edu.hit.zxkt.vo.vod.CoursePublishVo;
 import cn.edu.hit.zxkt.vo.vod.CourseQueryVo;
 import cn.edu.hit.zxkt.vod.mapper.CourseMapper;
 import cn.edu.hit.zxkt.vod.service.CourseDescriptionService;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,6 +135,21 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         CourseDescription description=new CourseDescription();
         description.setDescription(courseFormVo.getDescription());
         descriptionService.updateById(description);
+    }
+
+    //根据课程id查询发布课程信息
+    @Override
+    public CoursePublishVo getCoursePublishVo(Long id) {
+        return baseMapper.selectCoursePublishVoById(id);
+    }
+
+    //课程最终发布
+    @Override
+    public void publishCourse(Long id) {
+        Course course = baseMapper.selectById(id);
+        course.setStatus(1);//已经发布
+        course.setPublishTime(new Date());
+        baseMapper.updateById(course);
     }
 
     //获取这些id对应名称进行封装,最终显示
