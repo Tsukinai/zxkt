@@ -1,6 +1,7 @@
 package cn.edu.hit.zxkt.vod.controller;
 
 
+import cn.edu.hit.zxkt.model.vod.Chapter;
 import cn.edu.hit.zxkt.result.Result;
 import cn.edu.hit.zxkt.vo.vod.ChapterVo;
 import cn.edu.hit.zxkt.vod.service.ChapterService;
@@ -35,10 +36,31 @@ public class ChapterController {
     }
 
     //2 添加章节
-
+    @PostMapping("save")
+    public Result save(@RequestBody Chapter chapter){
+        chapterService.save(chapter);
+        return Result.ok(null);
+    }
 
     //3 修改-根据id查询
+    @GetMapping("get/{id}")
+    public Result get(@PathVariable Long id){
+        Chapter chapter=chapterService.getById(id);
+        return Result.ok(chapter);
+    }
 
     //4 修改-最终实现
+    @PostMapping("update")
+    public Result update(@RequestBody Chapter chapter){
+        chapterService.updateById(chapter);
+        return Result.ok(null);
+    }
+
+    //5 删除章节
+    @DeleteMapping("remove/{id}")
+    public Result remove(@PathVariable Long id){
+        chapterService.removeById(id);
+        return Result.ok(null);
+    }
 }
 
