@@ -33,5 +33,14 @@ export default {
             url: `${api_name}/getTeacher/${id}`,
             method: `get`,
         })
+    },
+    //修改讲师
+    updateTeacher(teacher) {
+        return request({
+            url: `${api_name}/updateTeacher`,
+            method: `post`,
+            //使用json对象传递
+            data: teacher
+        })
     }
 }

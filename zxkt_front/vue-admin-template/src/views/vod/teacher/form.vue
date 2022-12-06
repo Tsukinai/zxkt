@@ -65,13 +65,31 @@ export default {
                     this.teacher = response.data
             })
         },
-        saveOrUpdate() {
+        //添加
+        save() {
             teacherApi.addTeacher(this.teacher)
                 .then(response => {
                     this.$message.success(response.message)
                 });
             //重定向到教师列表
-            this.$router.push({ path:'/vod/teacher/list'})
+            this.$router.push({ path: '/vod/teacher/list' })
+        },
+        //修改
+        update() {
+            teacherApi.updateTeacher(this.teacher)
+                .then(response => {
+                    this.$message.success(response.message)
+                });
+            //重定向到教师列表
+            this.$router.push({ path: '/vod/teacher/list' })
+        },
+
+        saveOrUpdate() {
+            if (this.teacher.id) {//有id
+                this.update()
+            } else {//无id
+                this.save()
+            }
         }
     }
 }
