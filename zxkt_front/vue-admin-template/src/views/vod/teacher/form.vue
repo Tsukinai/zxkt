@@ -59,7 +59,7 @@ export default {
                 .then(response => {
                     this.$message.success(response.message)
                 });
-            //跳转列表页面
+            //重定向到教师列表
             this.$router.push({ path:'/vod/teacher/list'})
         }
     }
