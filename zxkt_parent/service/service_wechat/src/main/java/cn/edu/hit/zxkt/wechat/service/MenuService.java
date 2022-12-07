@@ -1,0 +1,22 @@
+package cn.edu.hit.zxkt.wechat.service;
+
+import cn.edu.hit.zxkt.model.wechat.Menu;
+import cn.edu.hit.zxkt.vo.wechat.MenuVo;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 订单明细 订单明细 服务类
+ * </p>
+ *
+ * @author Tsukinai
+ * @since 2022-12-08
+ */
+public interface MenuService extends IService<Menu> {
+
+    List<MenuVo> findMenuInfo();
+
+    List<Menu> findMenuOneInfo();
+}
