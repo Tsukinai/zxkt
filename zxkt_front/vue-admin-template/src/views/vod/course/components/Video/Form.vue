@@ -16,19 +16,27 @@
       </el-form-item>
       <!-- 上传视频 -->
       <el-form-item label="上传视频">
-        <el-upload ref="upload"
-        :auto-upload="false"
-        :on-success="handleUploadSuccess"
-        :on-error="handleUploadError"
-        :on-exceed="handleUploadExceed"
-        :file-list="fileList"
-        :limit="1"
-        :before-remove="handleBeforeRemove"
-        :on-remove="handleOnRemove"
-        :action="BASE_API + '/admin/vod/upload'">
+        <el-upload
+          ref="upload"
+          :auto-upload="false"
+          :on-success="handleUploadSuccess"
+          :on-error="handleUploadError"
+          :on-exceed="handleUploadExceed"
+          :file-list="fileList"
+          :limit="1"
+          :before-remove="handleBeforeRemove"
+          :on-remove="handleOnRemove"
+          :action="BASE_API + '/admin/vod/upload'"
+          name="file"
+        >
           <el-button slot="trigger" size="small" type="primary">选择视频</el-button>
-          <el-button :disabled="uploadBtnDisabled" style="margin-left: 10px;" size="small" type="success"
-            @click="submitUpload()">上传</el-button>
+          <el-button
+            :disabled="uploadBtnDisabled"
+            style="margin-left: 10px;"
+            size="small"
+            type="success"
+            @click="submitUpload()"
+          >上传</el-button>
         </el-upload>
       </el-form-item>
     </el-form>

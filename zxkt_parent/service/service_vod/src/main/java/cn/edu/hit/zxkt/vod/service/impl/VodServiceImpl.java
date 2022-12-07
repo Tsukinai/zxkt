@@ -20,7 +20,7 @@ public class VodServiceImpl implements VodService {
 
     //上传视频
     @Override
-    public String updateVideo() {
+    public String updateVideo(String url) {
         //指定腾讯云id和key
         VodUploadClient client = new VodUploadClient(ConstantPropertiesUtil.ACCESS_KEY_ID, ConstantPropertiesUtil.ACCESS_KEY_SECRET);
 
@@ -28,7 +28,7 @@ public class VodServiceImpl implements VodService {
         VodUploadRequest request = new VodUploadRequest();
 
         //设置视频文件在本地路径
-        request.setMediaFilePath("D:\\Desktop\\001.mp4");
+        request.setMediaFilePath(url);
 
         //任务流部分
         request.setProcedure("LongVideoPreset ");

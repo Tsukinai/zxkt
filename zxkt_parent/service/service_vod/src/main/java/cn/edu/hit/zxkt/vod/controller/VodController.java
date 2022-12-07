@@ -8,7 +8,10 @@ import cn.edu.hit.zxkt.vod.utils.Signature;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 @Api(tags = "腾讯云点播")
@@ -42,9 +45,25 @@ public class VodController {
     }
 
     //上传视频接口
-    @PostMapping("upload")
-    public Result upload() {
-        String fileId = vodService.updateVideo();
+    @RequestMapping("upload")
+    public Result upload(@RequestParam("file") MultipartFile multipartFile) {
+        String filePath = "D:/" + multipartFile.getOriginalFilename();
+        File file = new File(filePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        // 文件存储
+        try {
+            multipartFile.transferTo(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String fileId = vodService.updateVideo(filePath);
+        file.delete();
         return Result.ok(fileId);
     }
 
