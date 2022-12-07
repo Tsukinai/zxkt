@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/admin/vod/course-description")
-@CrossOrigin
+//@CrossOrigin
 public class CourseDescriptionController {
 
 }
