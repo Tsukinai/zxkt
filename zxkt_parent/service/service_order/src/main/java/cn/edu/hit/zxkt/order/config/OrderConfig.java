@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan("cn/edu/hit/zxkt/order/mapper")
+@MapperScan("cn.edu.hit.zxkt.order.mapper")
 public class OrderConfig {
     /**
      * 分页插件
