@@ -101,7 +101,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         CourseDescription courseDescription = new CourseDescription();
         courseDescription.setDescription(courseFormVo.getDescription());
         //设置课程id
-        courseDescription.setId(course.getId());
+        courseDescription.setCourseId(course.getId());
         descriptionService.save(courseDescription);
         return course.getId();
     }
@@ -116,7 +116,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         }
         //课程描述信息
         QueryWrapper<CourseDescription> wrapper = new QueryWrapper<>();
-        wrapper.eq("id", id);
+        wrapper.eq("course_id", id);
         CourseDescription courseDescription =descriptionService.getOne(wrapper);
         //封装
         CourseFormVo courseFormVo = new CourseFormVo();
