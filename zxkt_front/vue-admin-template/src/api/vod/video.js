@@ -22,7 +22,7 @@ export default {
   updateById(video) {
     return request({
       url: `${api_name}/update`,
-      method: 'post',
+      method: 'put',
       data: video
     })
   },
