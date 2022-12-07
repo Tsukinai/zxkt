@@ -1,9 +1,15 @@
 package cn.edu.hit.zxkt.order.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import cn.edu.hit.zxkt.model.order.OrderInfo;
+import cn.edu.hit.zxkt.order.service.OrderInfoService;
+import cn.edu.hit.zxkt.result.Result;
+import cn.edu.hit.zxkt.vo.order.OrderInfoQueryVo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
 
 /**
  * <p>
@@ -14,8 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-12-07
  */
 @RestController
-@RequestMapping("/order/order-info")
+@RequestMapping(value = "/admin/order/orderInfo")
 public class OrderInfoController {
 
+    @Autowired
+    private OrderInfoService orderInfoService;
+
+    //订单列表
+    @GetMapping("{page}/{limit}")
+    public Result listOrder(@PathVariable Long page, @PathVariable Long limit, OrderInfoQueryVo orderInfoQueryVo) {
+        //创建page对象
+        Page<OrderInfo> pageParam = new Page<>(page, limit);
+        Map<String, Object> map = orderInfoService.selectOrderInfoPage(pageParam, orderInfoQueryVo);
+        return Result.ok(map);
+    }
 }
 
