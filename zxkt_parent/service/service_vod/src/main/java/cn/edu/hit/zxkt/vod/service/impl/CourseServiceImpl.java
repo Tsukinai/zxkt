@@ -116,7 +116,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         }
         //课程描述信息
         QueryWrapper<CourseDescription> wrapper = new QueryWrapper<>();
-        wrapper.eq("course_id", id);
+        wrapper.eq("id", id);
         CourseDescription courseDescription =descriptionService.getOne(wrapper);
         //封装
         CourseFormVo courseFormVo = new CourseFormVo();
