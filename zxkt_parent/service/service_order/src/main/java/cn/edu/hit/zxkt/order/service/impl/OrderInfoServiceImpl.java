@@ -41,9 +41,13 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         String phone = orderInfoQueryVo.getPhone();
         String createTimeEnd = orderInfoQueryVo.getCreateTimeEnd();
         String createTimeBegin = orderInfoQueryVo.getCreateTimeBegin();
+        int orderStatus = orderInfoQueryVo.getOrderStatus();
 
         //判断条件是否为空,不为空,进行封装
         QueryWrapper<OrderInfo> wrapper = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(orderStatus)) {
+            wrapper.eq("order_status", orderStatus);
+        }
         if (!StringUtils.isEmpty(userId)) {
             wrapper.eq("user_id", userId);
         }
