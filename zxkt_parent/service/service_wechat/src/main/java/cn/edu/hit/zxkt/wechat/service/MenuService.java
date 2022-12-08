@@ -16,7 +16,14 @@ import java.util.List;
  */
 public interface MenuService extends IService<Menu> {
 
+    //获取所有菜单
     List<MenuVo> findMenuInfo();
 
+    //获取所有一级菜单
     List<Menu> findMenuOneInfo();
+
+    //同步菜单方法
+    void syncMenu();
+
+    void removeMenu();
 }

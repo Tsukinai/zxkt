@@ -1,10 +1,14 @@
 package cn.edu.hit.zxkt.wechat.controller;
 
 
+import cn.edu.hit.zxkt.exception.ZxktException;
 import cn.edu.hit.zxkt.model.wechat.Menu;
 import cn.edu.hit.zxkt.result.Result;
 import cn.edu.hit.zxkt.vo.wechat.MenuVo;
 import cn.edu.hit.zxkt.wechat.service.MenuService;
+import cn.edu.hit.zxkt.wechat.utils.ConstantPropertiesUtil;
+import cn.edu.hit.zxkt.wechat.utils.HttpClientUtils;
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +28,46 @@ import java.util.List;
 public class MenuController {
     @Autowired
     private MenuService menuService;
+
+    //删除菜单方法
+    @DeleteMapping("removeMenu")
+    public Result removeMenu() {
+        menuService.removeMenu();
+        return Result.ok(null);
+    }
+
+    //同步菜单方法
+    @GetMapping("syncMenu")
+    public Result syncMenu() {
+        menuService.syncMenu();
+        return Result.ok(null);
+    }
+
+    //获取access_token
+    @GetMapping("getAccessToken")
+    public Result getAcessToken() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("http://api.weixin.qq.com/cgi-bin/token");
+        buffer.append("?grant_type=client_credential");
+        buffer.append("&appid=%s");
+        buffer.append("&secret=%s");
+        //设置路径参数
+        String url = String.format(buffer.toString(),
+                ConstantPropertiesUtil.ACCESS_KEY_ID,
+                ConstantPropertiesUtil.ACCESS_KEY_SECRET);
+        //get请求
+        try {
+            String tokenString = HttpClientUtils.get(url);
+            //获取access_token
+            JSONObject jsonObject = JSONObject.parseObject(tokenString);
+            String access_token = jsonObject.getString("access_token");
+            return Result.ok(access_token);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ZxktException(20001,"获取access_token失败");
+        }
+
+    }
 
     //获取所有菜单，按照一级和二级菜单封装
     @GetMapping("findMenuInfo")
