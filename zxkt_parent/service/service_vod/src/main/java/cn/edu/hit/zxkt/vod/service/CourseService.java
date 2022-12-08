@@ -4,6 +4,8 @@ import cn.edu.hit.zxkt.model.vod.Course;
 import cn.edu.hit.zxkt.vo.vod.CourseFormVo;
 import cn.edu.hit.zxkt.vo.vod.CoursePublishVo;
 import cn.edu.hit.zxkt.vo.vod.CourseQueryVo;
+import cn.edu.hit.zxkt.vo.vod.CourseVo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -33,4 +35,10 @@ public interface CourseService extends IService<Course> {
     void publishCourse(Long id);
 
     void removeCourseId(Long id);
+
+    //根据课程分类查询课程列表
+    Map<String,Object> findPage(Page<Course> pageParam, CourseQueryVo courseQueryVo);
+
+    //根据课程id查询课程详情
+    Map<String, Object> getInfoById(Long courseId);
 }

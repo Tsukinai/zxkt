@@ -7,9 +7,11 @@ import cn.edu.hit.zxkt.model.vod.Teacher;
 import cn.edu.hit.zxkt.vo.vod.CourseFormVo;
 import cn.edu.hit.zxkt.vo.vod.CoursePublishVo;
 import cn.edu.hit.zxkt.vo.vod.CourseQueryVo;
+import cn.edu.hit.zxkt.vo.vod.CourseVo;
 import cn.edu.hit.zxkt.vod.mapper.CourseMapper;
 import cn.edu.hit.zxkt.vod.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -170,6 +172,84 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         descriptionService.removeById(id);
         //删除课程
         baseMapper.deleteById(id);
+    }
+
+    //根据课程分类查询课程列表
+    @Override
+    public Map<String,Object> findPage(Page<Course> pageParam,
+                                    CourseQueryVo courseQueryVo) {
+        //获取条件值
+        String title = courseQueryVo.getTitle();
+        Long subjectId = courseQueryVo.getSubjectId();
+        Long subjectParentId = courseQueryVo.getSubjectParentId();
+        Long teacherId = courseQueryVo.getTeacherId();
+
+        //判断条件值是否为空，进行封装
+        QueryWrapper<Course> wrapper = new QueryWrapper<>();
+        if(!StringUtils.isEmpty(title)){
+            wrapper.like("title",title);
+        }
+        if(!StringUtils.isEmpty(title)){
+            wrapper.like("subjectId",subjectId);
+        }
+        if(!StringUtils.isEmpty(title)){
+            wrapper.like("subjectParentId",subjectParentId);
+        }
+        if(!StringUtils.isEmpty(title)){
+            wrapper.like("teacherId",teacherId);
+        }
+
+        //调用方法进行条件分页查询
+        Page<Course> pages= baseMapper.selectPage(pageParam, wrapper);
+        //获取分页数据
+        long totalCount =pages.getTotal();
+        long totalPage = pages.getPages();
+        long currentPage = pages.getCurrent();
+        long size = pages.getSize();
+        //每页数据集合
+        List<Course> records = pages.getRecords();
+        //封装其他数据(获取讲师和课程分类)
+        records.stream().forEach(item -> {
+            this.getTeacherAndSubjectName(item);
+        });
+        //map集合返回
+        Map<String,Object> map = new HashMap<>();
+        map.put("totalCount",totalCount);
+        map.put("totalPage",totalPage);
+        map.put("records",records);
+        return map;
+    }
+
+    private Course getTeacherAndSubjectName(Course course) {
+        Long teacherId = course.getTeacherId();
+        Teacher teacher = teacherService.getById(teacherId);
+        if(teacher != null){
+            course.getParam().put("teacherName",teacher.getName());
+        }
+        //课程分类命名称
+        Long subjectParentId = course.getSubjectParentId();
+        Subject oneSubject = subjectService.getById(subjectParentId);
+        if(oneSubject != null){
+            course.getParam().put("subjectParentTitle",oneSubject.getTitle());
+        }
+        Long subjectId = course.getSubjectId();
+        Subject twoSubject = subjectService.getById(subjectId);
+        if(twoSubject != null){
+            course.getParam().put("subjectTitle",twoSubject.getTitle());
+        }
+        return course;
+    }
+
+    //根据课程id查询课程详情
+    @Override
+    public Map<String, Object> getInfoById(Long courseId) {
+        //view_count流量数量 +1
+        //根据课程ID查询
+        //课程详情数据
+        //课程描述信息
+        //课程所需讲师信息
+        //封装map集合并返回
+        return null;
     }
 
     //获取这些id对应名称进行封装,最终显示
