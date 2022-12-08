@@ -204,6 +204,26 @@ export const constantRoutes = [
       }
     ]
   },
+
+  {
+    path: '/wechat',
+    component: Layout,
+    redirect: '/wechat/menu/list',
+    name: 'Wechat',
+    meta: {
+      title: '菜单管理',
+      icon: 'el-icon-refrigerator'
+    },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'menu/list',
+        name: 'Menu',
+        component: () => import('@/views/wechat/menu/list'),
+        meta: { title: '菜单列表', icon: 'table' }
+      }
+    ]
+  },
   {
     path: '/example',
     component: Layout,
