@@ -162,7 +162,7 @@ export const constantRoutes = [
         path: 'orderInfo/list',
         name: 'OrderInfo',
         component: () => import('@/views/order/list'),
-        meta: { title: '订单列表' }
+        meta: { title: '订单列表', icon: 'table' }
       }
     ]
   },
@@ -179,7 +179,7 @@ export const constantRoutes = [
         path: 'couponInfo/list',
         name: 'CouponInfo',
         component: () => import('@/views/activity/couponInfo/list'),
-        meta: { title: '优惠券列表' }
+        meta: { title: '优惠券列表', icon: 'table' }
       },
       {
         path: 'couponInfo/add',
