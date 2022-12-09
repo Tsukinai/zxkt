@@ -28,8 +28,8 @@ public class VodServiceImpl implements VodService {
     @Autowired
     private VideoService videoService;
 
-    @Value("${tencent.video.appid}")
-    private String appId;
+    /*@Value("${tencent.video.appid}")
+    private String appId;*/
 
     //上传视频
     @Override
@@ -84,7 +84,7 @@ public class VodServiceImpl implements VodService {
         }
     }
 
-    @Override
+    /*@Override
     public Map<String, Object> getPlayAuth(Long courseId, Long videoId) {
         //根据小节id获取小节对象，获取腾讯云视频id
         Video video = videoService.getById(videoId);
@@ -95,5 +95,5 @@ public class VodServiceImpl implements VodService {
         map.put("videoSourceId",video.getVideoSourceId());
         map.put("appId",appId);
         return map;
-    }
+    }*/
 }

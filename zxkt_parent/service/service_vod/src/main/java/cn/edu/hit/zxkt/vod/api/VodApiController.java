@@ -1,3 +1,4 @@
+/*
 package cn.edu.hit.zxkt.vod.api;
 
 import cn.edu.hit.zxkt.result.Result;
@@ -28,3 +29,4 @@ public class VodApiController {
         return Result.ok(map);
     }
 }
+*/
