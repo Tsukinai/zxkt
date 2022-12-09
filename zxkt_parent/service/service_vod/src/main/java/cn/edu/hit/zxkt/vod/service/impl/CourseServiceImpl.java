@@ -4,10 +4,7 @@ import cn.edu.hit.zxkt.model.vod.Course;
 import cn.edu.hit.zxkt.model.vod.CourseDescription;
 import cn.edu.hit.zxkt.model.vod.Subject;
 import cn.edu.hit.zxkt.model.vod.Teacher;
-import cn.edu.hit.zxkt.vo.vod.CourseFormVo;
-import cn.edu.hit.zxkt.vo.vod.CoursePublishVo;
-import cn.edu.hit.zxkt.vo.vod.CourseQueryVo;
-import cn.edu.hit.zxkt.vo.vod.CourseVo;
+import cn.edu.hit.zxkt.vo.vod.*;
 import cn.edu.hit.zxkt.vod.mapper.CourseMapper;
 import cn.edu.hit.zxkt.vod.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -243,13 +240,28 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     //根据课程id查询课程详情
     @Override
     public Map<String, Object> getInfoById(Long courseId) {
-        //view_count流量数量 +1
+        //view_count浏览数量 +1
+        Course course = baseMapper.selectById(courseId);
+        course.setViewCount(course.getViewCount()+1);
+        baseMapper.updateById(course);
         //根据课程ID查询
         //课程详情数据
+        CourseVo courseVo = baseMapper.selectCourseVoById(courseId);
+        //课程章节小节数据
+        List<ChapterVo> chapterVoList = chapterService.getTreeList(courseId);
         //课程描述信息
+        CourseDescription courseDescription = descriptionService.getById(courseId);
         //课程所需讲师信息
+        Teacher teacher = teacherService.getById(course.getTeacherId());
         //封装map集合并返回
-        return null;
+        Map<String,Object>  map = new HashMap<>();
+        map.put("courseVo",courseVo);
+        map.put("chapterVoList",chapterVoList);
+        map.put("description",null !=courseDescription ?
+                courseDescription.getDescription() : "");
+        map.put("teacher",teacher);
+        map.put("isBuy",false);//是否购买
+        return map;
     }
 
     //获取这些id对应名称进行封装,最终显示
