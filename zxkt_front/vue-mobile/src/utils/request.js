@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // 创建axios实例
 const service = axios.create({
-    baseURL: 'http://ggkt.vipgz1.91tunnel.com', // api 的 base_url
+    baseURL: 'http://zxkt.free.idcfengye.com', // api 的 base_url
     //baseURL: 'http://glkt-api.atguigu.cn',
     timeout: 30000 // 请求超时时间
 
@@ -26,8 +26,8 @@ service.interceptors.response.use(response => {
         if (response.data.code == 208) {
             //debugger
             // 替换# 后台获取不到#后面的参数
-            let url = window.location.href.replace('#', 'guiguketan')
-            window.location = 'http://ggkt.vipgz1.91tunnel.com/api/user/wechat/authorize?returnUrl=' + url
+            let url = window.location.href.replace('#', 'zxkt')
+            window.location = 'http://zxkt.free.idcfengye.com/api/user/wechat/authorize?returnUrl=' + url
         } else {
             if (response.data.code == 20000) {
                 return response.data
