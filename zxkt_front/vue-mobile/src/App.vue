@@ -21,7 +21,7 @@ export default {
 
     created() {
         // 处理微信授权登录
-       // this.wechatLogin();
+       this.wechatLogin();
     },
 
     methods: {
@@ -36,7 +36,7 @@ export default {
             token = window.localStorage.getItem('token') || '';
             if (token == '') {
                 let url = window.location.href.replace('#', 'guiguketan')
-                window.location = 'http://ggkt.vipgz1.91tunnel.com/api/user/wechat/authorize?returnUrl=' + url
+                window.location = 'http://zxkt.free.idcfengye.com/api/user/wechat/authorize?returnUrl=' + url
             }
             console.log('token2：'+window.localStorage.getItem('token'));
 
