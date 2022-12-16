@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="service_gateway" />
         <module name="service_activity" />
+        <module name="service_course_client" />
         <module name="service_user" />
         <module name="service_user_client" />
         <module name="service_wechat" />
@@ -18,26 +19,13 @@
         <module name="model" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="common" target="1.8" />
-      <module name="model" target="1.8" />
-      <module name="service" target="1.8" />
-      <module name="service_activity" target="1.8" />
-      <module name="service_client" target="1.8" />
-      <module name="service_gateway" target="1.8" />
-      <module name="service_order" target="1.8" />
-      <module name="service_user" target="1.8" />
-      <module name="service_user_client" target="1.8" />
-      <module name="service_utils" target="1.8" />
-      <module name="service_vod" target="1.8" />
-      <module name="service_wechat" target="1.8" />
-      <module name="zxkt_parent" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="model" options="-parameters" />
+      <module name="service" options="" />
       <module name="service_activity" options="-parameters" />
+      <module name="service_course_client" options="-parameters" />
       <module name="service_gateway" options="-parameters" />
       <module name="service_order" options="-parameters" />
       <module name="service_user" options="-parameters" />
@@ -45,6 +33,7 @@
       <module name="service_utils" options="-parameters" />
       <module name="service_vod" options="-parameters" />
       <module name="service_wechat" options="-parameters" />
+      <module name="zxkt_parent" options="" />
     </option>
   </component>
 </project>
