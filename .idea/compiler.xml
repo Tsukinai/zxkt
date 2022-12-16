@@ -7,9 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="service_course_client" />
         <module name="service_gateway" />
         <module name="service_activity" />
-        <module name="service_course_client" />
         <module name="service_user" />
         <module name="service_user_client" />
         <module name="service_wechat" />
